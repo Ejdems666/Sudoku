@@ -17,7 +17,8 @@ public class Generator {
         while (scanner.hasNext()) {
             String[] line = scanner.nextLine().split("");
             for (int squareRowI = 0; squareRowI < 3; squareRowI++) {
-                for (int x = squareRowI*3; x < squareRowI*3+3; x++) {
+                int firstXInCurrentSquare = squareRowI * 3;
+                for (int x = firstXInCurrentSquare; x < firstXInCurrentSquare+3; x++) {
                     Field field = new Field(x,y,Integer.parseInt(line[x]));
                     squares.addField(getIndexOfSquare(squareRowI,y),field);
                 }
