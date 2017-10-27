@@ -20,8 +20,12 @@ public class BoardPieceBuffer<K extends BoardPiece> {
         }
     }
 
-    public void addField(int boardPieceIndex, Field field) {
-        boardPieces.get(boardPieceIndex).addField(field);
+    public void addField(int boardPieceIndex, Field field) throws WrongFileFormatException {
+        try {
+            boardPieces.get(boardPieceIndex).addField(field);
+        } catch (IndexOutOfBoundsException e) {
+            throw new WrongFileFormatException();
+        }
     }
 
     public List<K> getBoardPieces() {

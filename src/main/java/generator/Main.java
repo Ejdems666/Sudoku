@@ -3,14 +3,13 @@ package generator;
 import board.Board;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
  * Created by adam on 10/27/2017.
  */
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws Exception {
         File mapFile = new File(getFileName(args));
         Scanner scanner = new Scanner(mapFile);
         Generator generator = new Generator();
