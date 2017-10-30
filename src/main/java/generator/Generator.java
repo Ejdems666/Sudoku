@@ -19,39 +19,22 @@ public class Generator {
             if (line.length != 9) {
                 throw new WrongFileFormatException();
             }
-            fillRowYOfSquaresOnRowY(y, line);
-            fillRowYOfAllColumns(y, line);
-            fillRow(y, line);
+            for (int x = 0; x < line.length; x++) {
+                int value = Integer.parseInt(line[x]);
+                Field field = new Field(x, y, value);
+                fillRowYOfSquaresOnRowY(y, x, field);
+                columns.addField(x, field);
+                rows.addField(y, field);
+            }
             y++;
         }
         return new Board(columns.getBoardPieces(), rows.getBoardPieces(), squares.getBoardPieces());
     }
 
-    private void fillRowYOfSquaresOnRowY(int y, String[] line) throws WrongFileFormatException {
-        for (int squareRowI = 0; squareRowI < 3; squareRowI++) {
-            int firstXInCurrentSquare = squareRowI * 3;
-            int squareIndex = (int) (squareRowI + 3 * Math.floor(y / 3));
-            for (int x = firstXInCurrentSquare; x < firstXInCurrentSquare + 3; x++) {
-                Field field = new Field(x, y, Integer.parseInt(line[x]));
-                squares.addField(squareIndex, field);
-            }
-        }
+    private void fillRowYOfSquaresOnRowY(int y, int x, Field field) throws WrongFileFormatException {
+        double squareColumn = Math.floor(x / 3);
+        double squareRow = Math.floor(y / 3);
+        int squareIndex = (int) (squareColumn + 3 * squareRow);
+        squares.addField(squareIndex, field);
     }
-
-    private void fillRowYOfAllColumns(int y, String[] line) throws WrongFileFormatException {
-        for (int x = 0; x < line.length; x++) {
-            int value = Integer.parseInt(line[x]);
-            Field field = new Field(x,y, value);
-            columns.addField(x,field);
-        }
-    }
-
-    private void fillRow(int y, String[] line) throws WrongFileFormatException {
-        for (int x = 0; x < line.length; x++) {
-            int value = Integer.parseInt(line[x]);
-            Field field = new Field(x,y, value);
-            rows.addField(y,field);
-        }
-    }
-
 }
