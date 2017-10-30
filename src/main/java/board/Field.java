@@ -30,8 +30,11 @@ public class Field {
         return value;
     }
 
-    void setValue(int value) {
+    public void setValueAndNotify(int value) {
+        possibleValues.clear();
         this.value = value;
+        column.onBoardChange(value);
+        row.onBoardChange(value);
     }
 
     public boolean isEmpty() {
@@ -48,5 +51,25 @@ public class Field {
 
     public void setSquare(Square square) {
         this.square = square;
+    }
+
+    public Column getColumn() {
+        return column;
+    }
+
+    public Row getRow() {
+        return row;
+    }
+
+    public Square getSquare() {
+        return square;
+    }
+
+    public boolean hasPossibleValue(int value) {
+        return possibleValues.contains(value);
+    }
+
+    public void removePossibleValue(int value) {
+        possibleValues.remove(value);
     }
 }

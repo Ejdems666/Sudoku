@@ -22,30 +22,35 @@ public class Generator {
             for (int x = 0; x < line.length; x++) {
                 int value = Integer.parseInt(line[x]);
                 Field field = new Field(x, y, value);
-                addFieldToAccordingSquare(y, x, field);
-                addFieldToAccordingColumn(x, field);
-                addFieldToAccordingRow(y, field);
+                Column column = addFieldToAccordingColumn(x, field);
+                Row row = addFieldToAccordingRow(y, field);
+                Square square = addFieldToAccordingSquare(y, x, field);
+                square.addColumn(column);
+                square.addRow(row);
             }
             y++;
         }
         return new Board(columns.getBoardPieces(), rows.getBoardPieces(), squares.getBoardPieces());
     }
 
-    private void addFieldToAccordingRow(int y, Field field) throws WrongFileFormatException {
+    private Row addFieldToAccordingRow(int y, Field field) throws WrongFileFormatException {
         Row row = rows.addField(y, field);
         field.setRow(row);
+        return row;
     }
 
-    private void addFieldToAccordingColumn(int x, Field field) throws WrongFileFormatException {
+    private Column addFieldToAccordingColumn(int x, Field field) throws WrongFileFormatException {
         Column column = columns.addField(x, field);
         field.setColumn(column);
+        return column;
     }
 
-    private void addFieldToAccordingSquare(int y, int x, Field field) throws WrongFileFormatException {
+    private Square addFieldToAccordingSquare(int y, int x, Field field) throws WrongFileFormatException {
         double squareColumn = Math.floor(x / 3);
         double squareRow = Math.floor(y / 3);
         int squareIndex = (int) (squareColumn + 3 * squareRow);
         Square square = squares.addField(squareIndex, field);
         field.setSquare(square);
+        return square;
     }
 }

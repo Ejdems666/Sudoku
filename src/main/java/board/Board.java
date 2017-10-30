@@ -1,6 +1,6 @@
 package board;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by adam on 10/27/2017.
@@ -28,6 +28,17 @@ public class Board {
         return squares.get(index);
     }
 
+    public boolean isFilled() {
+        for (Row row : rows) {
+            for (Field field : row.getFields()) {
+                if (field.isEmpty()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         String result = "";
@@ -42,5 +53,17 @@ public class Board {
             result += "\n";
         }
         return result;
+    }
+
+    public List<BoardPiece> getColumns() {
+        return new ArrayList<>(columns);
+    }
+
+    public List<BoardPiece> getRows() {
+        return new ArrayList<>(rows);
+    }
+
+    public List<BoardPiece> getSquares() {
+        return new ArrayList<>(squares);
     }
 }
