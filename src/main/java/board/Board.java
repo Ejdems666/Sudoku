@@ -39,22 +39,6 @@ public class Board {
         return true;
     }
 
-    @Override
-    public String toString() {
-        String result = "";
-        for (Row row : rows) {
-            for (Field field : row.getFields()) {
-                if (field.isEmpty()) {
-                    result += "|.";
-                } else {
-                    result += "|"+field.getValue();
-                }
-            }
-            result += "\n";
-        }
-        return result;
-    }
-
     public List<BoardPiece> getColumns() {
         return new ArrayList<>(columns);
     }

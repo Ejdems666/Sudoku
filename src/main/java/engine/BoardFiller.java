@@ -22,6 +22,8 @@ public class BoardFiller {
         filler.fill(board);
     }
 
+    private BoardFormatter boardFormatter = new BoardFormatter();
+
     public void fill(Board board) {
         int safety = 0;
         while (!board.isFilled()) {
@@ -41,7 +43,7 @@ public class BoardFiller {
         System.out.println("Iterations: " + safety);
         String checkStatus = boardChecker.check(board) ? "correct" : "incorrect";
         System.out.println("Is " + checkStatus);
-        System.out.println(board);
+        System.out.println(boardFormatter.formatBoardWithValuesOnly(board));
     }
 
     private void fillBoardUsingSquaresAndPossibleValues(Board board) {
