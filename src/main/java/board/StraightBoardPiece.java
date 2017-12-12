@@ -7,21 +7,26 @@ public abstract class StraightBoardPiece extends BoardPiece {
     @Override
     public boolean canHaveValuePlacedIn(Field targetField, int value) {
         if (containsFieldWithValue(value)) return false;
+        if (checkMultiplePossibleValuesInSameTouchedSquare(targetField, value)) return false;
+        return true;
+    }
+
+    private boolean checkMultiplePossibleValuesInSameTouchedSquare(Field targetField, int value) {
         for (int s = 0; s <= 2; s++) {
-            int firstIndexInSquareS = s * 3;
-            Square square = fields.get(firstIndexInSquareS).getSquare();
-            if (square.equals(targetField.getSquare())) {
+            int firstIndexTouchingSquareS = s * 3;
+            Square touchedSquare = fields.get(firstIndexTouchingSquareS).getSquare();
+            if (touchedSquare.equals(targetField.getSquare())) {
                 continue;
             }
-            int countOfSamePossibleValuesTouchingSquareS = getCountOfSamePossibleValuesTouchingSquareS(value, firstIndexInSquareS);
+            int countOfSamePossibleValuesTouchingSquareS = getCountOfSamePossibleValuesTouchingSquareS(value, firstIndexTouchingSquareS);
             if (countOfSamePossibleValuesTouchingSquareS > 1) {
-                int countOfPossibleValuesOfSquareS = square.getFieldsWithSamePossibleValues(value).size();
+                int countOfPossibleValuesOfSquareS = touchedSquare.getFieldsWithSamePossibleValues(value).size();
                 if (countOfPossibleValuesOfSquareS == countOfSamePossibleValuesTouchingSquareS) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     private int getCountOfSamePossibleValuesTouchingSquareS(int value, int firstIndexInSquareS) {

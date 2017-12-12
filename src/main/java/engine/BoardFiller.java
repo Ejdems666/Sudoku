@@ -12,13 +12,13 @@ import java.util.Scanner;
 /**
  * Created by adam on 10/30/2017.
  */
-public class SudokuFiller {
+public class BoardFiller {
     public static void main(String[] args) throws Exception {
-        File mapFile = new File("resources/medium.txt");
+        File mapFile = new File("resources/hard.txt");
         Scanner scanner = new Scanner(mapFile);
         Generator generator = new Generator();
         Board board = generator.run(scanner);
-        SudokuFiller filler = new SudokuFiller();
+        BoardFiller filler = new BoardFiller();
         filler.fill(board);
     }
 
@@ -39,7 +39,8 @@ public class SudokuFiller {
         }
         BoardChecker boardChecker = new BoardChecker();
         System.out.println("Iterations: " + safety);
-        System.out.println("Is correct: "+boardChecker.check(board));
+        String checkStatus = boardChecker.check(board) ? "correct" : "incorrect";
+        System.out.println("Is " + checkStatus);
         System.out.println(board);
     }
 
