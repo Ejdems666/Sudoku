@@ -20,11 +20,7 @@ public class Square extends BoardPiece {
 
     @Override
     public boolean canHaveValuePlacedIn(Field targetField, int value) {
-        for (Field field : fields) {
-            if (field.getValue() == value) {
-                return false;
-            }
-        }
+        if (containsFieldWithValue(value)) return false;
         return targetField.getColumn().canHaveValuePlacedIn(targetField, value) && targetField.getRow().canHaveValuePlacedIn(targetField, value);
     }
 

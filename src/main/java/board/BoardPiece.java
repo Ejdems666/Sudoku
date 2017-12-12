@@ -36,20 +36,20 @@ public abstract class BoardPiece implements Notifyable{
 
     public void setLastMissingValue() {
         Field onlyEmptyField = null;
-        TreeSet<Integer> possibleValues = new TreeSet<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
+        TreeSet<Integer> possibleMissingValues = new TreeSet<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
         for (Field field : fields) {
             if (field.isEmpty()) {
-                if (onlyEmptyField == null) {
-                    onlyEmptyField = field;
-                } else {
+                if (onlyEmptyField != null) {
                     return;
+                } else {
+                    onlyEmptyField = field;
                 }
             } else {
-                possibleValues.remove(field.getValue());
+                possibleMissingValues.remove(field.getValue());
             }
         }
-        if (onlyEmptyField != null) {
-            onlyEmptyField.setValueAndNotify(possibleValues.first());
+        if (possibleMissingValues.size() == 1) {
+            onlyEmptyField.setValueAndNotify(possibleMissingValues.first());
         }
     }
 
@@ -58,5 +58,14 @@ public abstract class BoardPiece implements Notifyable{
         for (Field field : fields) {
             field.removePossibleValue(value);
         }
+    }
+
+    protected boolean containsFieldWithValue(int value) {
+        for (Field field : fields) {
+            if (field.getValue() == value) {
+                return true;
+            }
+        }
+        return false;
     }
 }

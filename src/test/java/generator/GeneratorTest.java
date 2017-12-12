@@ -17,7 +17,7 @@ public class GeneratorTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        mapFile = new File("resources/map1.txt");
+        mapFile = new File("resources/easy.txt");
         Scanner scanner = new Scanner(mapFile);
         Generator generator = new Generator();
         board = generator.run(scanner);

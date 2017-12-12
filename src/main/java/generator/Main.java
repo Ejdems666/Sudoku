@@ -21,7 +21,7 @@ public class Main {
         if (args.length >= 1) {
             return args[0];
         } else {
-            return "resources/map1.txt";
+            return "resources/easy.txt";
         }
     }
 }

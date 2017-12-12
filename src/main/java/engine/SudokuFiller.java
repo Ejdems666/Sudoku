@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class SudokuFiller {
     public static void main(String[] args) throws Exception {
-        File mapFile = new File("resources/map1.txt");
+        File mapFile = new File("resources/medium.txt");
         Scanner scanner = new Scanner(mapFile);
         Generator generator = new Generator();
         Board board = generator.run(scanner);
