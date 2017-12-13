@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class BoardFiller {
     public static void main(String[] args) throws Exception {
         File mapFile = new File("resources/hard.txt");
+        BoardFormatter.DEBUG = true;
         Scanner scanner = new Scanner(mapFile);
         Generator generator = new Generator();
         Board board = generator.run(scanner);
@@ -34,15 +35,19 @@ public class BoardFiller {
             }
             fillBoardUsingSquaresAndPossibleValues(board);
             safety++;
-            if (safety == 100) {
+            if (safety == 30) {
                 System.out.println("fail!");
                 break;
             }
         }
         BoardChecker boardChecker = new BoardChecker();
         System.out.println("Iterations: " + safety);
-        String checkStatus = boardChecker.check(board) ? "correct" : "incorrect";
-        System.out.println("Is " + checkStatus);
+        boolean checkStatus = boardChecker.check(board);
+        if (checkStatus) {
+            System.out.println("SUCCESS!");
+        } else {
+            System.out.println("DIDN'T FINISH! numbers filled:"+boardChecker.countFilledNumbers(board));
+        }
         System.out.println(boardFormatter.formatBoardWithValuesOnly(board));
     }
 
@@ -60,6 +65,7 @@ public class BoardFiller {
                     fieldsWithSamePossibleValues.get(0).setValueAndNotify(value);
                 }
             }
+            System.out.print(boardFormatter.formatFullBoardInDebugView(board));
         }
     }
 }

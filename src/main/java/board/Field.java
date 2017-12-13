@@ -33,8 +33,9 @@ public class Field {
     public void setValueAndNotify(int value) {
         possibleValues.clear();
         this.value = value;
-        column.onBoardChange(value);
-        row.onBoardChange(value);
+        column.onValueWrittenIn(value);
+        row.onValueWrittenIn(value);
+        square.onValueWrittenIn(value);
     }
 
     public boolean isEmpty() {
@@ -71,5 +72,9 @@ public class Field {
 
     public void removePossibleValue(int value) {
         possibleValues.remove(value);
+    }
+
+    public Set<Integer> getPossibleValues() {
+        return possibleValues;
     }
 }

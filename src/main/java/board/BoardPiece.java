@@ -54,7 +54,7 @@ public abstract class BoardPiece implements Notifyable{
     }
 
     @Override
-    public void onBoardChange(int value) {
+    public void onValueWrittenIn(int value) {
         for (Field field : fields) {
             field.removePossibleValue(value);
         }

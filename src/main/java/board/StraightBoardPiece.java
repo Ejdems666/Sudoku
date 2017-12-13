@@ -5,22 +5,26 @@ package board;
  */
 public abstract class StraightBoardPiece extends BoardPiece {
     @Override
-    public boolean canHaveValuePlacedIn(Field targetField, int value) {
-        if (containsFieldWithValue(value)) return false;
-        if (checkMultiplePossibleValuesInSameTouchedSquare(targetField, value)) return false;
+    public boolean canHaveValuePlacedIn(Field targetField, int possibleValue) {
+        if (containsFieldWithValue(possibleValue)) return false;
+        if (positionIsLockedByMultiplePossibleValuesInSeriesInAnotherSquare(targetField, possibleValue)) return false;
         return true;
     }
 
-    private boolean checkMultiplePossibleValuesInSameTouchedSquare(Field targetField, int value) {
+    /**
+     * When there are 2 or 3 possible Values on 2 or 3 fields only in a single row or column inside a different square
+     * Then the possible value can't be placed in the target field
+     */
+    private boolean positionIsLockedByMultiplePossibleValuesInSeriesInAnotherSquare(Field targetField, int possibleValue) {
         for (int s = 0; s <= 2; s++) {
-            int firstIndexTouchingSquareS = s * 3;
-            Square touchedSquare = fields.get(firstIndexTouchingSquareS).getSquare();
-            if (touchedSquare.equals(targetField.getSquare())) {
+            int firstIndexInSquare = s * 3;
+            Square overlappingSquare = fields.get(firstIndexInSquare).getSquare();
+            if (overlappingSquare.equals(targetField.getSquare())) {
                 continue;
             }
-            int countOfSamePossibleValuesTouchingSquareS = getCountOfSamePossibleValuesTouchingSquareS(value, firstIndexTouchingSquareS);
+            int countOfSamePossibleValuesTouchingSquareS = getCountOfSamePossibleValuesInOverlappingSquare(possibleValue, firstIndexInSquare);
             if (countOfSamePossibleValuesTouchingSquareS > 1) {
-                int countOfPossibleValuesOfSquareS = touchedSquare.getFieldsWithSamePossibleValues(value).size();
+                int countOfPossibleValuesOfSquareS = overlappingSquare.getFieldsWithSamePossibleValues(possibleValue).size();
                 if (countOfPossibleValuesOfSquareS == countOfSamePossibleValuesTouchingSquareS) {
                     return true;
                 }
@@ -29,9 +33,9 @@ public abstract class StraightBoardPiece extends BoardPiece {
         return false;
     }
 
-    private int getCountOfSamePossibleValuesTouchingSquareS(int value, int firstIndexInSquareS) {
+    private int getCountOfSamePossibleValuesInOverlappingSquare(int value, int firstIndexInSquare) {
         int count = 0;
-        for (int i = firstIndexInSquareS; i < firstIndexInSquareS + 3; i++) {
+        for (int i = firstIndexInSquare; i < firstIndexInSquare + 3; i++) {
             if (fields.get(i).hasPossibleValue(value)) {
                 count++;
             }
